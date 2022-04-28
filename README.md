@@ -29,4 +29,16 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \kwazaro\yii2\httpclient\AutoloadExample::widget(); ?>```
+<?php
+use kwazaro\yii2\httpclient\HttpClientRateLimitBehavior;
+
+$client = new \yii\httpclient\Client([
+    'baseUrl' => 'https://example.com/api',
+]);
+$client->attachBehavior('requestsLimit', [
+    'class' => HttpClientRateLimitBehavior::class,
+    'redis' => 'redis', // ID of your Yii2 Redis component.
+    'redisKey' => 'myRequests', // Name of Redis key for storing data.
+    'maxRequestsPerSecond' => 10, // Max number of requests per second.
+    'maxRequestsPerMinute' => 100, // Max number of requests per minute.
+]);
