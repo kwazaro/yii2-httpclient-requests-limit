@@ -1,0 +1,23 @@
+{
+    "name": "kwazaro/yii2-httpclient-requests-limit",
+    "description": "This is the behavior for Yii2 Http Client, which provides rate limiting for requests per second or per minute. It is useful for connecting web services with rate limiting.",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","httpclient","behavior","rate","limits","requests"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Oleg Malynovskyi",
+            "email": "kwazaro@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0",
+        "yiisoft/yii2-httpclient": "~2.0.0",
+        "yiisoft/yii2-redis": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "kwazaro\\yii2\\httpclient\\": ""
+        }
+    }
+}
