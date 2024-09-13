@@ -25,6 +25,9 @@ class HttpClientRateLimitBehavior extends Behavior
 
     /** @var int maximum number of requests per minute  */
     public $maxRequestsPerMinute = 100;
+    
+    /** @var int seconds to expire for redis key */
+    public $redisKeyExpire = 3600;
 
     /** @var Connection */
     protected $redisComponent;
@@ -38,6 +41,9 @@ class HttpClientRateLimitBehavior extends Behavior
         $this->redisComponent = Instance::ensure($this->redis, Connection::class);
         if (empty($this->redisKey) || !is_string($this->redisKey)) {
             throw new InvalidConfigException('"redisKey" property must be set.');
+        }
+        if (!is_integer($this->redisKeyExpire)) {
+            throw new InvalidConfigException('Wrong "expire" value. Must be integer.');
         }
     }
 
@@ -73,6 +79,7 @@ class HttpClientRateLimitBehavior extends Behavior
 
         // Save timestamp
         $this->redisComponent->rpush($this->redisKey, $timestamp);
+        $this->redisComponent->expire($this->redisKey, $this->redisKeyExpire);
     }
 
     /**
